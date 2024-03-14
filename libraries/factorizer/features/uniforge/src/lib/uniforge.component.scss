@@ -1,0 +1,461 @@
+// TODO: Split to sub-components : this is a big mock screen (non-production structure)
+// TODO: Responsive
+:host {
+  display: flex;
+  height: 100%;
+  .fct-side-controls,
+  .fct-help {
+    background: var(--background-light);
+    border-right: 1px solid var(--border);
+    height: 100%;
+    min-width: 300px;
+    max-width: 300px;
+    section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+      margin: var(--spacing-md) 0;
+      &:last-child {
+        margin-bottom: unset;
+      }
+    }
+  }
+  .fct-help {
+    max-width: 400px;
+    background: var(--background-lighter);
+    border-left: 1px solid var(--border);
+    border-right: unset;
+    position: relative;
+    pointer-events: none;
+    transition: box-shadow .5s ease-out,
+                border-color .2s ease-out;
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid var(--border);
+      background: var(--background-extra-light);
+      border-radius: 1rem;
+      position: absolute;
+      top: 48px;
+      left: -1rem;
+      z-index: 100;
+      cursor: pointer;
+      box-shadow: 0 3px 3px rgba(#000, .25);
+      pointer-events: auto;
+    }
+    &:hover:not(:has(.help-section:hover)) {
+      border-left-color: var(--primary);
+      box-shadow: 0 -3px 16px rgba(#818082, .5);
+    }
+  }
+  .fct-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100%;
+  }
+  .fct-main {
+    display: flex;
+    margin: 0 auto;
+    flex-grow: 1;
+    padding: var(--spacing-xl) 0;
+    width: 900px;
+    .fct-main-sticky {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      max-height: calc(100vh - 490px);
+      overflow-y: auto;
+      padding: 0 var(--spacing-md);
+      margin: 0 -1rem;
+    }
+  }
+}
+
+.fct-fluid {
+  flex: 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.fct-page-into {
+  display: flex;
+  flex-direction: column;
+  min-width: 900px;
+  max-width: 900px;
+  h1 {
+    margin-bottom: var(--spacing-xl);
+    .fct-hello {
+      display: inline-block;
+      background: linear-gradient(74deg,
+        var(--factorizer-color-brand-text-gradient-stop-2) 0,
+        var(--factorizer-color-brand-text-gradient-stop-1) 9%,
+        var(--factorizer-color-brand-text-gradient-stop-2) 20%,
+        var(--factorizer-color-brand-text-gradient-stop-3) 24%,
+        var(--factorizer-color-brand-text-gradient-stop-2) 35%,
+        var(--factorizer-color-brand-text-gradient-stop-3) 44%,
+        var(--factorizer-color-brand-text-gradient-stop-2) 50%,
+        var(--factorizer-color-brand-text-gradient-stop-3) 56%,
+        var(--factorizer-color-surface) 75%,
+        var(--factorizer-color-surface) 100%
+      );
+      background-size: 400% 100%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .fct-title {
+      display: block;
+      color: #616062;
+    }
+  }
+}
+
+.prompt {
+  width: 100%;
+  .prompt-info {
+    color: #616062;
+    font-size: .85rem;
+    margin: var(--spacing-sm) 0;
+    max-width: 700px;
+  }
+  textarea {
+    width: 100%;
+    height: 150px;
+    padding: var(--spacing-md);
+    border-radius: var(--spacing-sm);
+    background: var(--background-extra-light);
+    resize: none;
+  }
+}
+
+// TODO: Move to global style
+h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 2.5rem;
+}
+
+.section-title {
+  text-transform: uppercase;
+  font-size: .85rem;
+  color: #818082;
+}
+
+label {
+  font-size: .85rem;
+}
+
+.radio-block {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-xs) 0;
+  label {
+    display: flex;
+    flex: 1 0;
+    justify-content: space-between;
+  }
+  span {
+    justify-self: flex-end;
+    text-align: right;
+    color: var(--factorizer-color-surface-light);
+  }
+}
+.krs-info-box {
+  margin: var(--spacing-md) 0;
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  padding: var(--spacing-lg);
+  border-radius: var(--spacing-md);
+  background: var(--accent);
+  i {
+    font-size: 2.5rem;
+  }
+  a {
+    font-weight: 600;
+    display: block;
+    margin-top: var(--spacing-sm);
+    color: var(--factorizer-color-surface);
+    i { font-size: 1rem }
+  }
+  &.small {
+    margin: var(--spacing-sm) 0;
+    padding: var(--spacing-md);
+    i { font-size: 1rem; }
+  }
+}
+
+.fct-info-blocks {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  .block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 0 1 33%;
+    height: 200px;
+    padding: var(--spacing-lg);
+    background: var(--background-light);
+    border-radius: var(--spacing-md);
+    transition: all .2s ease-out;
+    &:hover {
+      background: var(--primary);
+      color: #fff;
+      i {
+        background: var(--primary-hover);
+      }
+    }
+    i {
+      display: flex;
+      width: 2.5rem;
+      height: 2.5rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1.25rem;
+      background: var(--border);
+      align-self: flex-end;
+      transition: all .2s ease-out;
+    }
+  }
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+::ng-deep {
+  .p-dropdown {
+    width: 100%;
+    border-radius: 0;
+    .p-inputtext {
+      padding: var(--spacing-sm) var(--spacing-md);
+    }
+  }
+}
+
+button {
+  gap: var(--spacing-sm);
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.ub-configuration {
+  padding: var(--spacing-lg);
+  box-sizing: border-box;
+  display: block;
+  // TODO: Make this dynamic instead hardcoded calc
+  max-height: calc(100vh - 56px - 35.5px); // Main nav + status bar
+  overflow-y: auto;
+}
+
+.help-section {
+  padding: var(--spacing-lg);
+  box-sizing: border-box;
+  display: block;
+  pointer-events: auto;
+  // TODO: Make this dynamic instead hardcoded calc
+  max-height: calc(100vh - 56px - 35.5px); // Main nav + status bar
+  overflow-y: auto;
+  h2 {
+    margin: var(-sspacing-md) 0;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  font-size: .85rem;
+  color: var(--factorizer-color-surface);
+
+  ol, ul {
+    margin: 0 1rem;
+    padding: 0;
+    li {
+      &:not(:last-child) {
+        margin-bottom: .125rem;
+      }
+      span {
+        font-weight: 700;
+      }
+    }
+  }
+
+  .fct-tip {
+    margin: var(--spacing-md) 0;
+    background: var(--background-light);
+    border: 1px solid var(--border);
+    padding: var(--spacing-md);
+    border-radius: var(--spacing-lg);
+    border-left: 2px solid var(--accent);
+    display: flex;
+    gap: var(--spacing-sm);
+    .title {
+      font-weight: 700;
+      font-style: oblique;
+      margin: var(--spacing-sm);
+    }
+    i {
+      display: flex;
+      min-width: 2rem;
+      height: 2rem;
+      border-radius: 1rem;
+      background: var(--border);
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  border-radius: var(--spacing-lg);
+  border: 1px dashed var(--accent);
+  background: var(--accent-light);
+}
+
+.fct-ai-generation {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  span {
+    display: block;
+    text-align: center;
+  }
+  ng-lottie {
+    display: block;
+    width: 100%;
+    height: 350px;
+    margin: -100px 0 -50px;
+  }
+  .heading {
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .description {
+    color: #616062;
+    font-size: .85rem;
+    max-width: 400px;
+    text-align: center;
+    margin: var(--spacing-md) auto 0;
+  }
+}
+
+.fct-unit-block {
+  table {
+    border-spacing: 0;
+    width: 100%;
+    th, td {
+      padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    .al-left { text-align: left }
+    .al-right { text-align: right }
+    .ub-heading { font-weight: 200 }
+    .ub-title { font-weight: 400 }
+    .ub-heading-key {
+      font-weight: 200;
+      i { color: var(--factorizer-color-surface-light) }
+    }
+    .ub-heading-val { font-weight: 400 }
+    &.t-bordered {
+      margin: var(--spacing-md) 0;
+      td {
+        border: 1px solid var(--border);
+      }
+    }
+    .heading-cell { background: var(--background-light) }
+    .qg-heading {
+      color: #FFF;
+      text-transform: uppercase;
+      text-align: center;
+      background: var(--color-warning);
+      &-alt {
+        background: var(--primary);
+      }
+    }
+  }
+  .ub-quality-gates {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    table, > div {
+      flex-basis: calc(50% - var(--spacing-xs));
+    }
+    .ub-rule,
+    .ub-proc {
+      display: flex;
+      width: 100%;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-xs) var(--spacing-sm);
+      &:nth-child(2n) {
+        background: var(--background-light);
+      }
+      .rule { font-weight: 700 }
+      .stat { font-weight: 500 }
+      .spacer {
+        flex-grow: 1;
+        border-bottom: 1px dashed var(--factorizer-color-surface-light);
+        margin-bottom: 4px;
+      }
+      .main {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 600;
+      }
+      .alt-desc {
+        font-size: .85rem;
+        color: var(--factorizer-color-surface-light);
+      }
+    }
+    .desc {
+      padding: var(--spacing-xs) var(--spacing-sm);
+      font-size: .85rem;
+      color: var(--factorizer-color-surface-light);
+    }
+    .ub-proc {
+      flex-direction: column;
+      gap: unset;
+    }
+  }
+}
+
+.color-warning { color: var(--color-warning) }
+.color-success { color: var(--color-success) }
+.color-info {
+  color: var(--color-info);
+  font-weight: 300;
+}
+
+.info-banner {
+  background: #0b5fe9;
+  color: #FFF;
+  font-weight: 300;
+  .link {
+    color: #fff;
+  }
+  .wrapper {
+    padding: .75rem 0;
+    text-align: center;
+    width: 90%;
+    max-width: 1000px;
+    margin: auto;
+  }
+}

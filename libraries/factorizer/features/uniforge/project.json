@@ -1,0 +1,15 @@
+{
+  "name": "feature-factorizer-uniforge",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libraries/factorizer/features/uniforge/src",
+  "prefix": "frg",
+  "tags": [
+    "type:feature",
+    "platform:angular",
+    "project:kairos",
+    "product:factorizer",
+    "scope:ui"
+  ],
+  "projectType": "library",
+  "targets": {}
+}

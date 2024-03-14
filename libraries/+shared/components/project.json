@@ -1,0 +1,14 @@
+{
+  "name": "components",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libraries/+shared/components/src",
+  "prefix": "frg",
+  "tags": [
+    "type:library",
+    "platform:angular",
+    "project:kairos",
+    "scope:ui"
+  ],
+  "projectType": "library",
+  "targets": {}
+}

@@ -1,0 +1,100 @@
+{
+  "name": "factorizer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "krs",
+  "sourceRoot": "apps/factorizer/src",
+  "tags": [
+    "type:application",
+    "platform:angular",
+    "project:kairos",
+    "product:factorizer",
+    "scope:ui"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/factorizer",
+        "index": "apps/factorizer/src/index.html",
+        "browser": "apps/factorizer/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/factorizer/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/factorizer/src/favicon.svg",
+          "apps/factorizer/src/assets",
+          "apps/factorizer/src/manifest.webmanifest",
+        ],
+        "styles": [
+          "apps/factorizer/src/styles.scss",
+          "node_modules/primeicons/primeicons.css",
+          "node_modules/primeng/resources/primeng.min.css",
+          "node_modules/primeng/resources/themes/lara-light-blue/theme.css"
+        ],
+        "scripts": [],
+        "server": "apps/factorizer/src/main.server.ts",
+        "prerender": true,
+        "ssr": {
+          "entry": "apps/factorizer/server.ts"
+        },
+        "serviceWorker": "apps/factorizer/src/ngsw-config.json"
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "10kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/factorizer/src/environments/environment.ts",
+              "with": "apps/factorizer/src/environments/environment.production.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "factorizer:build:production"
+        },
+        "development": {
+          "buildTarget": "factorizer:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "factorizer:build"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "factorizer:build",
+        "staticFilePath": "dist/factorizer/static"
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@components": ["libraries/+shared/components/src/index.ts"],
+      "@feature/factorizer/uniforge": ["libraries/factorizer/features/uniforge/src/index.ts"],
+      "@module/factorizer/main": ["libraries/factorizer/modules/main/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

@@ -1,0 +1,675 @@
+<aside class="fct-side-controls" [formGroup]="configurationForm">
+  <div class="ub-configuration">
+  <div class="section-title" i18n>Unit Block Config</div>
+  <section>
+    <div class="fieldset">
+      <label>Squad</label>
+      <p-dropdown [disabled]="generating" inputId="department" formControlName="department" [options]="departments"></p-dropdown>
+    </div>
+    <div class="fieldset">
+      <label>Technology Stack</label>
+      <p-dropdown [disabled]="generating" inputId="techStack" formControlName="techStack" [options]="techStack"></p-dropdown>
+    </div>
+    <div class="fieldset">
+      <label>Work Intent</label>
+      <p-dropdown [disabled]="generating" inputId="workIntent" formControlName="workIntent" [options]="workIntent"></p-dropdown>
+    </div>
+    <div class="fieldset">
+      <label>Core Deliverable</label>
+      <p-dropdown [disabled]="generating" inputId="deliverable" formControlName="deliverable" [options]="deliverable"></p-dropdown>
+    </div>
+    <div class="fieldset">
+      <label>
+        Efficiency Optimization
+        <i class="ri-question-line"
+           pTooltip="Balance is QuantAgile's Recommendation. However, you may optimize for incredible speed which might drastically increate it but jeopardize quality and vice versa."
+           tooltipPosition="right"
+           aria-hidden="true"></i>
+      </label>
+      <p-dropdown [disabled]="generating" inputId="efficiencyOptimization" formControlName="efficiencyOptimization" [options]="efficiencyOptimization"></p-dropdown>
+    </div>
+    <div class="fieldset">
+      <label>Complexity</label>
+      <div class="radio-block">
+        <p-radioButton [disabled]="generating" id="cpx-low" formControlName="complexity" value="0"></p-radioButton>
+        <label for="cpx-low">
+          Low
+          <span>
+            Intern
+            <i class="ri-information-2-line"
+               pTooltip="Doesn't require experiene as it's clearly defined work"></i>
+          </span>
+        </label>
+      </div>
+      <div class="radio-block">
+        <p-radioButton [disabled]="generating" id="cpx-med" formControlName="complexity" value="1"></p-radioButton>
+        <label for="cpx-med">
+          Medium
+          <span>
+            Intermediate
+            <i class="ri-information-2-line"
+               pTooltip="Can be done by moderately experienced worker"></i>
+          </span>
+        </label>
+      </div>
+      <div class="radio-block">
+        <p-radioButton [disabled]="generating" id="cpx-exp" formControlName="complexity" value="2"></p-radioButton>
+        <label for="cpx-exp">
+          High
+          <span>
+            Expert
+            <i class="ri-information-2-line"
+               pTooltip="Requires a highly skilled professional"></i>
+          </span>
+        </label>
+      </div>
+    </div>
+    <div class="fieldset">
+      <label>Estimated Effort</label>
+      <p-dropdown [disabled]="generating" inputId="estimatedEffort" formControlName="estimatedEffort" [options]="estimatedEffort"></p-dropdown>
+    </div>
+    <div class="dropzone" i18n>
+      Drop CSV of your current Quality Gate here
+      <a href="" target="_blank">Get CSV Template</a>
+    </div>
+    <!-- TODO: These should be replaced with dropdown once Tribe Map feature is completed -->
+    <div class="fieldset">
+      <label>Master's Name</label>
+      <input pInputText [disabled]="generating" placeholder="Luke Skywalker" />
+    </div>
+    <div class="fieldset">
+      <label>Governor's Name</label>
+      <input pInputText [disabled]="generating" placeholder="Anakin Skywalker" />
+    </div>
+  </section>
+  </div>
+</aside>
+<div class="fct-container">
+  <div class="info-banner">
+    <div class="wrapper block-xs">
+      QuantAgile&reg; Certification is on the way.
+      <a href="//quant-agile.com/certification" class="link">Register your interest.</a>
+    </div>
+  </div>
+  <section class="fct-main">
+    <div class="fct-page-into">
+      <h1 *ngIf="showHello">
+        <span class="fct-hello">Hello QuantAgilist.</span>
+        <span class="fct-title">Let's Forge a new Unit Block!</span>
+      </h1>
+      <div class="fct-fluid">
+        <div class="fct-main-sticky">
+          <div *ngIf="showIntro">
+            <div class="fct-info-blocks">
+              <div class="block">
+              <span>
+                Define the type of Work for which
+                we should be forging a new Unit Block.
+              </span>
+                <i class="ri-list-indefinite" aria-hidden="true"></i>
+              </div>
+              <div class="block">
+              <span>
+                Describe what is crucial for you to consider this
+                type of work a high quality.
+              </span>
+                <i class="ri-shield-flash-line" aria-hidden="true"></i>
+              </div>
+              <div class="block">
+              <span>
+                Let the magic happen as UniForge will generate
+                a new Unit Block definition for you.
+              </span>
+                <i class="ri-sparkling-2-line" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="krs-info-box">
+              <i class="ri-shield-star-line" aria-hidden="true"></i>
+              <div class="krs-message">
+                Your Forging Unit Blocks are processed by human reviewers to improve the technologies powering
+                Factorizer. Do not share trade secrets you wouldn't want reviewer to see.
+                <a href="" target="_blank">
+                  Learn more about our review process
+                  <i class="ri-external-link-fill"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="generating" class="fct-ai-generation">
+            <div>
+              <ng-lottie [options]="genAIAnimationOptions"></ng-lottie>
+              <span class="heading" i18n>Please wait</span>
+              <span i18n>UniForge&trade; is generating your Unit Block...</span>
+              <span i18n>Generating <strong>{{ generationNumber }} revision</strong> of QuantAgile&reg; Forging Unit Block</span>
+              <span>This might take 10-15 seconds. Stand by...</span>
+              <div class="description" i18n>
+                After the generation of Unit Block is done, you will be able to refine
+                the outcome using the text area below or by tweaking work type definition
+                in the configuration pane.
+              </div>
+            </div>
+          </div>
+          <div *ngIf="showUnitBlock" class="fct-unit-block">
+          <table id="ub-info">
+            <tr>
+              <th>
+                <img ngSrc="/assets/img/ast-ub-logo.svg" width="41" height="41" alt="Astatinn's Logo" />
+              </th>
+              <th>
+                <div class="ub-heading">Checklist & Procedures</div>
+                <div class="ub-title">ENG.UI Create a Component - Angular</div>
+              </th>
+              <th class="al-left">
+                <div class="ub-heading-key">
+                  FL PTS.
+                  <i class="ri-question-line"
+                     pTooltip="Floored Points used for estimating the work in sprints. Flored means that points are rounded to the smaller incremental value"
+                     tooltipPosition="bottom"
+                     aria-hidden="true"></i>
+                </div>
+                <div class="ub-heading-val">10</div>
+              </th>
+              <th class="al-right">
+                <div class="ub-heading-key">
+                  REV #
+                  <i class="ri-question-line"
+                     pTooltip="Revision number represents the version of the Unit Block"
+                     tooltipPosition="bottom"
+                     aria-hidden="true"></i>
+                </div>
+                <div class="ub-heading-val">{{ unitBlockRevision }}</div>
+              </th>
+            </tr>
+          </table>
+          <table id="ub-basics" class="t-bordered">
+            <tr>
+              <td class="heading-cell">Purpose</td>
+              <td colspan="3">Delivers a Reusable & Responsive UI Component (Molecule)</td>
+            </tr>
+            <tr>
+              <td class="heading-cell">Master</td>
+              <td><a href="">Slobodan Sekulic</a></td>
+              <td colspan="2">
+                <i class="ri-question-line"
+                   pTooltip="Reporting to Governor"
+                   tooltipPosition="bottom"
+                   aria-hidden="true"></i>
+                RTG:
+                <a href="">Milos Sretin</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="heading-cell">
+                <i class="ri-question-line"
+                   pTooltip="Category in a Service Catalog where this Unit Block belongs"
+                   tooltipPosition="bottom"
+                   aria-hidden="true"></i>
+                Catalog CTGR
+              </td>
+              <td>Engineering</td>
+              <td>UI</td>
+              <td>Angular</td>
+            </tr>
+            <tr>
+              <td class="heading-cell">Skills Req.</td>
+              <!-- TODO: While saving to catalog a separate entry should be added to save list of available/newly added skills -->
+              <td colspan="3">HTML, SCSS, Tailwind, Nrwl Nx, NgRx, RxJS, KendoUI</td>
+            </tr>
+            <tr>
+              <td class="heading-cell">Timings</td>
+              <td>
+                Expected Avg. Cycle <strong class="color-warning">5h</strong>
+                <span class="color-info"> Client Expectation</span>
+              </td>
+              <td>
+                SLA.Impl. <strong class="color-success">3h</strong>
+              </td>
+              <td>
+                SLA.QC <strong class="color-success">1h</strong>
+              </td>
+            </tr>
+            <tr>
+              <td class="heading-cell" rowspan="2">Deps</td>
+              <td>
+                <!-- TODO: This example info is for production as we don't know deps at this point so leave example -->
+                <i class="ri ri-alert-line" style="margin-right: .25rem"
+                   pTooltip="This is just an example, you should add real dependencies to the table"
+                   tooltipPosition="bottom"
+                   aria-hidden="true"></i>
+                <span class="color-info">ENG.UI Integrate API - NgRx Redux</span>
+              </td>
+              <td class="color-info">
+                SLA.Impl. <strong>6h</strong>
+              </td>
+              <td class="color-info">
+                Master: <a href="">Mohammed A</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i class="ri ri-alert-line" style="margin-right: .25rem"
+                   pTooltip="This is just an example, you should add real dependencies to the table"
+                   tooltipPosition="bottom"
+                   aria-hidden="true"></i>
+                <span class="color-info">ENG.UI Assemble Screen</span>
+              </td>
+              <td class="color-info">
+                SLA.Impl. <strong>4h</strong>
+              </td>
+              <td class="color-info">
+                Master: <a href="">Michael M.</a>
+              </td>
+            </tr>
+          </table>
+            <div class="krs-info-box small">
+              <i class="ri-information-2-line" aria-hidden="true"></i>
+              <div class="krs-message">
+                You will be able to link Unit Block with actual dependencies once it is saved in Service Catalog.
+              </div>
+            </div>
+          <div class="ub-quality-gates">
+            <div>
+              <!-- Input QG -->
+              <table id="ub-input-qg" class="t-bordered">
+                <tr>
+                  <td colspan="2" class="qg-heading">Input Q-Gate</td>
+                </tr>
+                <tr>
+                  <div class="ub-rule">
+                    <div class="rule">Design</div>
+                    <div class="spacer"></div>
+                    <div class="stat">FIGMA(PROTO)</div>
+                  </div>
+                </tr>
+                <tr>
+                  <div class="ub-rule">
+                    <div class="rule">Acceptance criteria</div>
+                    <div class="spacer"></div>
+                    <div class="stat">LIST(MAX 5)</div>
+                  </div>
+                </tr>
+                <tr>
+                  <div class="ub-rule">
+                    <div class="rule">Data</div>
+                    <div class="spacer"></div>
+                    <div class="stat">SCHEMA</div>
+                  </div>
+                </tr>
+              </table>
+              <!-- PROCESS -->
+              <table id="ub-process" class="t-bordered">
+                <tr>
+                  <td colspan="2" class="qg-heading qg-heading-alt">PROCEDURES</td>
+                </tr>
+                <tr>
+                  <div class="ub-proc">
+                    <div class="main">
+                      Use Schematics for boilerplate code
+                      <a href="" target="_blank">Schematics Docs</a>
+                    </div>
+                    <div class="ald-desc">
+                      Recommended to use Nrwl Nx Tool in WebStorm Credentials should be provided in team documentation
+                    </div>
+                  </div>
+                  <div class="ub-proc">
+                    <div class="main">
+                      Import PrimeNG Component
+                      <span><a href="" target="_blank">PrimeNG Docs</a></span>
+                    </div>
+                  </div>
+                  <div class="ub-proc">
+                    <div class="main">Extend base Component</div>
+                    <div class="ald-desc">
+                      Molecule → Base Compound Component
+                    </div>
+                  </div>
+                  <div class="ub-proc">
+                    <div class="main">
+                      Avoid local overrides of global styles
+                    </div>
+                  </div>
+                  <div class="ub-proc">
+                    <div class="main">
+                      Use Storybook Schematics
+                      <a href="" target="_blank">Storybook Docs</a>
+                    </div>
+                    <div class="ald-desc">
+                      This helps create a component Storybook
+                    </div>
+                  </div>
+                  <div class="ub-proc">
+                    <div class="main">
+                      Use Unit Test Generator
+                      <a href="" target="">Generator Docs</a>
+                    </div>
+                    <div class="ald-desc">
+                      This helps create a UT for the component using AI
+                    </div>
+                  </div>
+                  <div class="ub-proc">
+                    <div class="main">
+                      Use Mabl for UI Tests
+                      <span><a href="" target="_blank">Mabl Docs</a></span>
+                    </div>
+                    <div class="ald-desc">
+                      Credentials are available in corporate portal
+                    </div>
+                  </div>
+                  <div class="ub-proc">
+                    <div class="main">
+                      Use QuantAgile.Doppler to test output
+                      <a href="" target="_blank">Doppler Docs</a>
+                    </div>
+                  </div>
+                </tr>
+              </table>
+            </div>
+            <!-- Output QG -->
+            <table id="ub-output-qg" class="t-bordered">
+              <tr>
+                <td colspan="2" class="qg-heading">Output Q-Gate</td>
+              </tr>
+              <tr>
+                <div class="ub-rule">
+                  <div class="rule">Standalone Component</div>
+                  <div class="spacer"></div>
+                  <div class="stat">
+                    MDTR
+                    <i class="ri-question-line"
+                       pTooltip="Mandatory"
+                       tooltipPosition="bottom"
+                       aria-hidden="true"></i>
+                  </div>
+                </div>
+              </tr>
+              <tr>
+                <div class="ub-rule">
+                  <div class="rule">State Management</div>
+                  <div class="spacer"></div>
+                  <div class="stat">NgRX</div>
+                </div>
+                <div class="desc">
+                  Data → Separate Data-Access Lib → NgRx Store Cmp.Flow → Same Module → NgRx Cmp.Store
+                </div>
+              </tr>
+              <tr>
+                <div class="ub-rule">
+                  <div class="rule">Async Pipe in Template</div>
+                  <div class="spacer"></div>
+                  <div class="stat">
+                    MDTR
+                    <i class="ri-question-line"
+                       pTooltip="Mandatory"
+                       tooltipPosition="bottom"
+                       aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="desc">
+                  Encapsulation needs to be Emulated
+                </div>
+              </tr>
+              <tr>
+                <div class="ub-rule">
+                  <div class="rule">Template Logic Computation</div>
+                  <div class="spacer"></div>
+                  <div class="stat">
+                    FRBDN
+                    <i class="ri-question-line"
+                       pTooltip="Strictly Forbiden"
+                       tooltipPosition="bottom"
+                       aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="desc">
+                  Prefer get/set over function to avoid c-detect ccls.
+                </div>
+              </tr>
+              <tr>
+                <div class="ub-rule">
+                  <div class="rule">Tailwind CSS</div>
+                  <div class="spacer"></div>
+                  <div class="stat">
+                    MDTR
+                    <i class="ri-question-line"
+                       pTooltip="Mandatory"
+                       tooltipPosition="bottom"
+                       aria-hidden="true"></i>
+                  </div>
+                </div>
+              </tr>
+              <tr>
+                <div class="ub-rule">
+                  <div class="rule">Change detection</div>
+                  <div class="spacer"></div>
+                  <div class="stat">
+                    SET(OnPush)
+                    <i class="ri-question-line"
+                       pTooltip="SET() Describes what value must be set."
+                       tooltipPosition="bottom"
+                       aria-hidden="true"></i>
+                  </div>
+                </div>
+              </tr>
+              <tr>
+                <div class="ub-rule">
+                  <div class="rule">Reusable Module</div>
+                  <div class="spacer"></div>
+                  <div class="stat">
+                    PUT(Cmp. Lib)
+                    <i class="ri-question-line"
+                       pTooltip="PUT() Describes where object/file should be placed"
+                       tooltipPosition="bottom"
+                       aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="desc">
+                  Product Specific → Libs / Product / Components Cross-Product → Libs / +Shared / Components
+                </div>
+              </tr>
+              <tr>
+                <div class="ub-rule">
+                  <div class="rule">Storybook</div>
+                  <div class="spacer"></div>
+                  <div class="stat">
+                    COVER(I/O)
+                    <i class="ri-question-line"
+                       pTooltip="CODER() Mandates what must be covered. I/O means both Input() and Output() of component"
+                       tooltipPosition="bottom"
+                       aria-hidden="true"></i>
+                  </div>
+                </div>
+              </tr>
+              <tr>
+                <div class="ub-rule">
+                  <div class="rule">Unit Test</div>
+                  <div class="spacer"></div>
+                  <div class="stat">
+                    COVER(AC & PF)
+                    <i class="ri-question-line"
+                       pTooltip="COVER() Mandates what must be covered. AC stands for Acceptance Criteria; PF stands for Parameterized Functions"
+                       tooltipPosition="bottom"
+                       aria-hidden="true"></i>
+                  </div>
+                </div>
+              </tr>
+              <tr>
+                <div class="ub-rule">
+                  <div class="rule">UI Test</div>
+                  <div class="spacer"></div>
+                  <div class="stat">
+                    COVER(AC)
+                    <i class="ri-question-line"
+                       pTooltip="COVER() Mandates what must be covered. AC stands for Acceptance Criteria"
+                       tooltipPosition="bottom"
+                       aria-hidden="true"></i>
+                  </div>
+                </div>
+              </tr>
+              <tr>
+                <div class="ub-rule">
+                  <div class="rule">Contrast</div>
+                  <div class="spacer"></div>
+                  <div class="stat">
+                    L18PX 4.5:1 A18PX 3:1 VSL 3:1
+                    <i class="ri-question-line"
+                       pTooltip="Mandates the contrast ratio where LxPX = Text Lower than x PX, A..PX = Text Above x PX, and VSL = Visuals"
+                       tooltipPosition="bottom"
+                       aria-hidden="true"></i>
+                  </div>
+                </div>
+              </tr>
+              <tr>
+                <div class="ub-rule">
+                  <div class="rule">Responsive</div>
+                  <div class="spacer"></div>
+                  <div class="stat">
+                    TEST(SM MD LG)
+                    <i class="ri-question-line"
+                       pTooltip="TEST() Mandates what shoudl be tested. SM = Small Screens (Mobile), MD = Medium Screen (Tablets), LG = Large Screens (Desktop)"
+                       tooltipPosition="bottom"
+                       aria-hidden="true"></i>
+                  </div>
+                </div>
+              </tr>
+            </table>
+          </div>
+        </div>
+        </div>
+        <div class="prompt">
+          <textarea pInputTextarea
+                    [disabled]="generating"
+                    i18n-placeholder
+                    placeholder="Describe what is crucial for you to consider this work high quality"></textarea>
+          <div class="prompt-info" i18n>
+            While the UniForge&trade; will propose Unit Block definitions based on industry best practices, your team's
+            specific quality or work process considerations are essential to properly tailor Unit Block to your team.
+            Please elaborate on any additional criteria you deem crucial for high-quality work.
+          </div>
+          <button pButton pRipple (click)="generate()" [disabled]="generating">
+            <i class="ri-ai-generate" aria-hidden="true"></i>
+            <span i18n>Generate</span>
+          </button>
+          <button *ngIf="generated" [disabled]="generating" style="margin-left: .5rem" pButton pRipple class="p-button-outlined">
+            <i class="ri-save-3-line" aria-hidden="true"></i>
+            <span i18n>Save to Service Catalog</span>
+          </button>
+          <button *ngIf="generated" [disabled]="generating" style="margin-left: .5rem" pButton pRipple class="p-button-outlined p-button-secondary">
+            <i class="ri ri-file-pdf-2-line" aria-hidden="true"></i>
+            <span i18n>Download as PDF</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<aside class="fct-help">
+  <div class="toggle">
+    <i class="ri-arrow-drop-right-line"></i>
+  </div>
+  <div class="help-section">
+    <div class="section-title" i18n>Quick Help</div>
+    <h2 i18n>Using the Unit Block Generator</h2>
+    <p i18n>
+      This tool assists you in defining well-structured Unit Blocks for your
+      QuantAgile&reg; workflow. Here's a guide to get you started:
+    </p>
+    <ol>
+      <li i18n>Select Basic Information</li>
+      <ul>
+        <li i18n>
+          <span>Department</span>
+          Choose the team responsible for the work (e.g., Frontend, Backend, Design).
+        </li>
+        <li i18n>
+          <span>Technology Stack</span>
+          Specify the relevant technologies used (e.g., React, Python, AWS).
+        </li>
+        <li i18n>
+          <span>Work Intent</span>
+          Indicate the desired outcome of the work (e.g., Create, Update, Integrate).
+        </li>
+        <li i18n>
+          <span>Core Deliverable</span>
+          Define the tangible output produced (e.g., User Interface Component, API Endpoint).
+        </li>
+        <li i18n>
+          <span>Complexity</span>
+          Estimate the overall difficulty of the Unit Block (Low, Medium, High).
+          You may check information near each option for more details about complexity bar.
+        </li>
+        <li i18n>
+          <span>Estimated Effort</span>
+          Provide a rough time estimate (15m - 6h) - Note: Consider revising the upper limit as exceeding 6
+          hours might indicate the need for splitting the work into smaller Unit Blocks.
+        </li>
+        <li i18n>
+          <span>Current Quality Gate (Optional)</span>
+          Upload a CSV of your current Quality Gate that UniForge should take into account while generating your
+          Unit Block definition.<br/><br/>This should be a simple CSV including the following structure:
+          <ul>
+            <li>Rule (rule)</li>
+            <li>Rule Description (description)</li>
+            <li>How to evaluate? (evaluation)</li>
+          </ul>
+        </li>
+      </ul>
+      <li>Provide Additional Information (Optional)</li>
+      <ul>
+        <li>
+          <div i18n>The large text area at the bottom allows you to</div>
+          <ul>
+            <li i18n>
+              <span>Refine High-Quality Criteria</span>
+              Describe any specific performance benchmarks, coding standards, integration requirements,
+              security considerations, or additional quality checks crucial for your team's definition of high-quality work.
+            </li>
+            <li i18n>
+              <span>Clarify Requirements</span>
+              Communicate any further details or context that might better guide the AI in
+              generating an accurate Unit Block definition.
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <li>
+        <span i18n>Generate Unit Block Definition</span>
+        <div i18n>Once you've filled in the information, interact with the AI by</div>
+        <ul>
+          <li i18n>
+            <span>Providing Initial Input</span>
+            Briefly describe the work your team typically does in the text area (e.g., "Create a user registration form component that validates user input").
+          </li>
+          <li i18n>
+            <span>Iterating with the AI</span>
+            Based on the initial suggestion, you can:
+            <ul>
+              <li>
+                <span>Refine your description</span>
+                Provide additional details to address any shortcomings in the AI's suggestion.
+              </li>
+              <li>
+                <span>Refine your definition</span>
+                Ask to add or modify specific elements of the Unit Block.
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ol>
+    <div class="fct-tip">
+      <i class="ri-hand-heart-fill" aria-hidden="true"></i>
+      <div>
+        <div class="title" i18n>Pro Tip</div>
+        <ul>
+          <li i18n>Be as specific as possible in your descriptions and requirements within the text area.</li>
+          <li i18n>Utilize the iterative process with the AI to ensure the generated Unit Block definition accurately reflects your team's workflow and quality expectations.</li>
+          <li i18n>Consider using the generated Unit Block as a starting point for further discussion and refinement within your team.</li>
+        </ul>
+      </div>
+    </div>
+    <p i18n>
+      For additional information about QuantAgile&reg; Unit Blocks, you may check <a target="_blank" href="https://quant-agile.com">QuantAgile&reg;</a> website
+      or read a detailed QuantAgile&reg; guides in <a href="https://www.amazon.com/QuantAgile-Methodology-Future-Software-Management/dp/B0CQRKX522" target="_blank">The Future of Software Management</a> book.
+    </p>
+  </div>
+</aside>

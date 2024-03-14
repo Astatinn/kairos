@@ -1,0 +1,15 @@
+{
+  "name": "module-factorizer-main",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libraries/factorizer/modules/main/src",
+  "prefix": "frg",
+  "tags": [
+    "type:module",
+    "platform:angular",
+    "project:kairos",
+    "product:factorizer",
+    "scope:ui"
+  ],
+  "projectType": "library",
+  "targets": {}
+}

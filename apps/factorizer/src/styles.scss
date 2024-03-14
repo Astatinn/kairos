@@ -1,0 +1,17 @@
+* {
+  outline: none;
+  user-select: none;
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-width: 1650px;
+}
+
+@import "theme/colors";
+@import "theme/layout";
